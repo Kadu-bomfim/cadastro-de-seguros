@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DataUtils {
 
-    static final String FORMATO_PADRAO_DATA = "ddMMuuuu";
+    static final String FORMATO_PADRAO_DATA = "MMdduuuu";
 
     public DataUtils() {
 
@@ -17,12 +17,12 @@ public class DataUtils {
 
     public String hoje() {
         LocalDate hoje = this.getNow();
-        return hoje.format(DateTimeFormatter.ofPattern("ddMMuuuu"));
+        return hoje.format(DateTimeFormatter.ofPattern("MMdduuuu"));
     }
 
     public String hojeMenosDias(int dias){
         LocalDate hoje = this.getNow().minusDays((long) dias);
-        return hoje.format(DateTimeFormatter.ofPattern("ddMMuuuu"));
+        return hoje.format(DateTimeFormatter.ofPattern("MMdduuuu"));
     }
 
     public String hojeMenosAnos(int anos, String formato){

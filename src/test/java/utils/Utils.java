@@ -1,21 +1,29 @@
 package utils;
 
+import com.github.javafaker.Faker;
 import io.cucumber.java.Scenario;
+import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
     public static ChromeDriver driver;
     private DataUtils dataUtils = new DataUtils();
+    public static Faker fake = new Faker();
+
+
 
     public static void acessarSistema() throws Exception {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
@@ -91,13 +99,11 @@ public class Utils {
         }
     }
 
-    public static void anexarUmDocumento() throws Exception {
+    public static void anexarUmDocumento() {
         File file = new File(System.getProperty("user.dir") + "/src/test/resources/arquivos/foto.jpg");
         Utils.driver.findElement(By.xpath("//input[@type='file']")).sendKeys(file.getAbsolutePath());
 
     }
-
-
 
     public static void diminuirZoomChrome() throws Exception{
         Robot robot = new Robot();
@@ -108,4 +114,15 @@ public class Utils {
             robot.keyRelease(KeyEvent.VK_MINUS);
         }
     }
+
+    public static String escreverTexto300Caracteres(String texto) {
+        Utils.verificaPresencaAlert();
+        while (texto.length() < 250) {
+            texto = texto + " " + "Obrigado Accenture!";
+        }
+        return texto;
+    }
+
+
+
 }

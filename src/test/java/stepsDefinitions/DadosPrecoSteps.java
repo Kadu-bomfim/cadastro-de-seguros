@@ -1,25 +1,16 @@
 package stepsDefinitions;
 
-import io.cucumber.java.pt.Entao;
+import io.cucumber.java.pt.Quando;
 import pageObject.DadosPrecoPage;
 
 public class DadosPrecoSteps {
 
     DadosPrecoPage dadosPrecoPage = new DadosPrecoPage();
 
-    @Entao("o sistema apresenta a aba select price option")
-    public void oSistemaApresentaAAbaSelectPriceOption() {
-        dadosPrecoPage.validarAbaSelectPrice();
+    @Quando("o usuario preencher o formulario Select Price Option")
+    public void oUsuarioPreencherOFormularioSelectPriceOption() {
+        dadosPrecoPage.preencherFormularioSelectPrice();
     }
 
-    @Entao("o usuario marcar a opcao ultimate")
-    public void oUsuarioMarcarAOpcaoUltimate() {
-        dadosPrecoPage.marcarRadioUltimate();
-    }
-
-    @Entao("o usuario acionar o botao nextda aba select price option")
-    public void oUsuarioAcionarOBotaoNextdaAbaSelectPriceOption() {
-        dadosPrecoPage.acionarBotaoNextAbaSelectPrice();
-    }
 
 }

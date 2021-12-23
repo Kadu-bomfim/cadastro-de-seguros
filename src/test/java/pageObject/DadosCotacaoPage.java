@@ -3,17 +3,18 @@ package pageObject;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utils.FormsUtils;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static utils.Utils.driver;
-import static utils.Utils.esperarElemento;
+import static utils.Utils.*;
 
-public class DadosCotacaoPage {
+public class DadosCotacaoPage extends FormsUtils {
 
     public DadosCotacaoPage() {
         PageFactory.initElements(driver, this);
     }
+
+    private String senha;
 
     @FindBy(id = "email")
     private WebElement inputEmail;
@@ -42,6 +43,9 @@ public class DadosCotacaoPage {
     @FindBy(xpath = "//h2[contains(.,'Sending e-mail success!')]")
     private WebElement mensagemSucesso;
 
+    @FindBy(xpath = "//p[contains(.,'There is still some data missing!')]")
+    private WebElement mensagemErro;
+
 
 
     public void validarAbaSendQuote(){
@@ -49,40 +53,49 @@ public class DadosCotacaoPage {
         assertTrue(abaSendQuote.isDisplayed());
     }
 
-    public void informarEmail(String email) {
+    public void informarEmail() {
         esperarElemento(inputEmail);
         assertTrue(inputEmail.isDisplayed());
-        inputEmail.sendKeys(email);
+        escrever(inputEmail, fake.internet().emailAddress());
     }
 
-    public void informarPhone(String phone){
+    public void informarPhone(){
         esperarElemento(inputPhone);
         assertTrue(inputPhone.isDisplayed());
-        inputPhone.sendKeys(phone);
+        escrever(inputPhone, String.valueOf(fake.number().numberBetween(10000000, 1500000000)));
+
     }
 
-    public void informarName(String name){
+    public void informarName(){
         esperarElemento(inputName);
         assertTrue(inputName.isDisplayed());
-        inputName.sendKeys(name);
+        escrever(inputName,String.valueOf(fake.name().username()));
     }
 
-    public void informarPassword(String password){
+    public void informarNameEmBranco(){
+        esperarElemento(inputName);
+        assertTrue(inputName.isDisplayed());
+    }
+
+    public void informarPassword(){
         esperarElemento(inputPassword);
         assertTrue(inputPassword.isDisplayed());
-        inputPassword.sendKeys(password);
+        this.senha = String.valueOf(fake.internet().password(7, 15, true));
+        escrever(inputPassword,this.senha+1);
+
     }
 
-    public void informarConfirmPassword(String confirmPassword){
+    public void informarConfirmPassword( ){
         esperarElemento(inputConfirmPassword);
         assertTrue(inputConfirmPassword.isDisplayed());
-        inputConfirmPassword.sendKeys(confirmPassword);
+        escrever(inputConfirmPassword, this.senha+1);
+
     }
 
-    public void informarComments(String comments){
+    public void informarComments( ) {
         esperarElemento(inputComments);
         assertTrue(inputComments.isDisplayed());
-        inputComments.sendKeys(comments);
+        escrever(inputComments, escreverTexto300Caracteres(""));
     }
 
     public void acionarBotaoNextAbaQuote(){
@@ -91,9 +104,49 @@ public class DadosCotacaoPage {
         botaoNextAbaQuote.click();
     }
 
-    public void validarMensagemDeCadastroComSucesso(String mensagem){
+
+    public void naoPreencherNameFormularioSendQuotePage() {
+        validarAbaSendQuote();
+        informarEmail();
+        informarPhone();
+        informarNameEmBranco();
+        informarPassword();
+        informarConfirmPassword();
+        informarComments();
+        acionarBotaoNextAbaQuote();
+    }
+
+    public void naoPreencherEmailFormularioSendQuotePage() {
+        validarAbaSendQuote();
+        informarPhone();
+        informarName();
+        informarPassword();
+        informarConfirmPassword();
+        informarComments();
+        acionarBotaoNextAbaQuote();
+    }
+
+    public void preencherFormularioSendQuotePage() {
+        validarAbaSendQuote();
+        informarEmail();
+        informarPhone();
+        informarName();
+        informarPassword();
+        informarConfirmPassword();
+        informarComments();
+        acionarBotaoNextAbaQuote();
+    }
+
+    public void validarMensagemDeCadastroComSucesso( ){
         esperarElemento(mensagemSucesso);
-        assertEquals(mensagemSucesso.getText(), mensagem);
+        assertTrue(mensagemSucesso.isDisplayed());
 
     }
+
+    public void validarMensagemDErro( ){
+        esperarElemento(mensagemErro);
+        assertTrue(mensagemErro.isDisplayed());
+
+    }
+
 }

@@ -3,59 +3,63 @@ package pageObject;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
+import utils.FormsUtils;
 
 import static org.junit.Assert.assertTrue;
 import static utils.Utils.*;
 
-public class DadosVeiculosPage {
+public class DadosVeiculosPage extends FormsUtils {
 
     public DadosVeiculosPage() {
         PageFactory.initElements(driver, this);
     }
 
-    public void selecionarMake(String make) {
+
+    public void selecionarMake() {
         WebElement selecionarMake = findElementXpath("//select[@id='make']");
         esperarElemento(selecionarMake);
-        assertTrue(selecionarMake.isDisplayed());
-        Select select = new Select(selecionarMake);
-        select.selectByVisibleText(make);
+        assertTrue(verificarSeAtivoEHabilitado(selecionarMake));
+        selectAleatorio(selecionarMake);
+
     }
 
-    public void selecionarModel (String model) {
+    public void selecionarModel () {
         WebElement selecionarModel = findElementId("model");
         esperarElemento(selecionarModel);
-        assertTrue(selecionarModel.isDisplayed());
-        Select select = new Select(selecionarModel);
-        select.selectByVisibleText(model);
+        assertTrue(verificarSeAtivoEHabilitado(selecionarModel));
+        selectAleatorio(selecionarModel);
     }
 
-    public void informarCylinderCapacity(String cylinder){
+    public void informarCylinderCapacity(){
         WebElement elementCylinder = findElementId("cylindercapacity");
         esperarElemento(elementCylinder);
         assertTrue(elementCylinder.isDisplayed());
-        elementCylinder.sendKeys(cylinder);
+
+        elementCylinder.sendKeys(gerarNumerosAleatorios(3));
     }
 
-    public void informarEnginePerformance(String engine){
+    public void informarEnginePerformance( ){
         WebElement elementEngine = findElementId("engineperformance");
         esperarElemento(elementEngine);
         assertTrue(elementEngine.isDisplayed());
-        elementEngine.sendKeys(engine);
+        escrever(elementEngine,String.valueOf(fake.number().randomDigitNotZero()));
+
     }
 
-    public void informarDateManufacture(String date){
+    public void informarDateManufacture( ){
         WebElement elementDate = findElementId("dateofmanufacture");
         esperarElemento(elementDate);
         assertTrue(elementDate.isDisplayed());
-        elementDate.sendKeys(date);
+        escrever(elementDate, datas().hojeMenosAnos(10, "MM/dd/yyyy"));
+
     }
 
-    public void selecionarNumberSeats(String number){
+    public void selecionarNumberSeats( ){
         WebElement elementNumberSeats = findElementId("numberofseats");
         esperarElemento(elementNumberSeats);
         assertTrue(elementNumberSeats.isDisplayed());
-        elementNumberSeats.sendKeys(number);
+        selectAleatorio(elementNumberSeats);
+
     }
 
     public void marcarCheckRightHandDrive(){
@@ -66,53 +70,59 @@ public class DadosVeiculosPage {
 
     }
 
-    public void selecionarNumberSeatsMotorcycle(String number){
+    public void selecionarNumberSeatsMotorcycle( ){
         WebElement elementNumberSeatsMotorcycle = findElementId("numberofseatsmotorcycle");
         esperarElemento(elementNumberSeatsMotorcycle);
         assertTrue(elementNumberSeatsMotorcycle.isDisplayed());
-        elementNumberSeatsMotorcycle.sendKeys(number);
+        selectAleatorio(elementNumberSeatsMotorcycle);
+
     }
 
-    public void selecionarFuelType(String fuel){
+    public void selecionarFuelType( ){
         WebElement elementFuelType = findElementId("fuel");
         esperarElemento(elementFuelType);
         assertTrue(elementFuelType.isDisplayed());
-        elementFuelType.sendKeys(fuel);
+        selectAleatorio(elementFuelType);
+
     }
 
-    public void informarPayload(String payload){
+    public void informarPayload( ){
         WebElement elementPayload = findElementId("payload");
         esperarElemento(elementPayload);
         assertTrue(elementPayload.isDisplayed());
-        elementPayload.sendKeys(payload);
+        escrever(elementPayload, String.valueOf(fake.number().numberBetween(1, 1000)));
+
     }
 
-    public void informarTotalWeight(String total){
+    public void informarTotalWeight( ){
         WebElement elementTotalWeight = findElementId("totalweight");
         esperarElemento(elementTotalWeight);
         assertTrue(elementTotalWeight.isDisplayed());
-        elementTotalWeight.sendKeys(total);
+        escrever(elementTotalWeight, String.valueOf(fake.number().numberBetween(100, 50000)));
     }
 
-    public void informarListPrice(String listPrice){
+    public void informarListPrice( ){
         WebElement elementListPrice = findElementId("listprice");
         esperarElemento(elementListPrice);
         assertTrue(elementListPrice.isDisplayed());
-        elementListPrice.sendKeys(listPrice);
+        escrever(elementListPrice, String.valueOf(fake.number().numberBetween(500, 100000)));
+
     }
 
-    public void informarLicensePlateNumber(String plateNumber){
+    public void informarLicensePlateNumber(){
         WebElement elementLicensePlateNumber = findElementId("licenseplatenumber");
         esperarElemento(elementLicensePlateNumber);
         assertTrue(elementLicensePlateNumber.isDisplayed());
-        elementLicensePlateNumber.sendKeys(plateNumber);
+        escrever(elementLicensePlateNumber, String.valueOf(fake.number().numberBetween(1, 1000000000)));
+
     }
 
-    public void informarAnnualMileage(String mileage){
+    public void informarAnnualMileage( ){
         WebElement elementAnnualMileage = findElementId("annualmileage");
         esperarElemento(elementAnnualMileage);
         assertTrue(elementAnnualMileage.isDisplayed());
-        elementAnnualMileage.sendKeys(mileage);
+        escrever(elementAnnualMileage, String.valueOf(fake.number().numberBetween(100, 100000)));
+
     }
 
     public void acionarBotaoNext() {
@@ -121,6 +131,24 @@ public class DadosVeiculosPage {
         Assert.assertTrue(elementBotaoNext.isDisplayed());
         elementBotaoNext.click();
 
+    }
+
+    public void preencherFormulario() {
+        selecionarMake();
+        selecionarModel();
+        informarCylinderCapacity();
+        informarEnginePerformance();
+        informarDateManufacture();
+        selecionarNumberSeats();
+        marcarCheckRightHandDrive();
+        selecionarNumberSeatsMotorcycle();
+        selecionarFuelType();
+        informarPayload();
+        informarTotalWeight();
+        informarListPrice();
+        informarLicensePlateNumber();
+        informarAnnualMileage();
+        acionarBotaoNext();
     }
 
 }
