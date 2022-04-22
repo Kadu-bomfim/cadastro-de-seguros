@@ -1,11 +1,11 @@
-# Prova técnica Teste Web
+# Teste Web
 
 Projeto desenvolvido para executar testes automatizados para Cadastro de Seguro. 
 
 
 ##  Requisitos
  * Java 8+ JDK deve estar instalado.
- * Navegador Google Chrome deve estar intalado na versão 96.0.46 .
+ * Navegador Google Chrome deve estar instalado
  * ChromeDrive (mesma versão do navegador instalado) deve estar instalado e configurado no path da aplicação.
  * Maven deve estar instalado e configurado no path da aplicação.
  * IDE Eclipse ou InteliJ deve estar instalada.
